@@ -1,0 +1,5 @@
+http://blog.csdn.net/cv_family_z/article/details/50474679                 SSD
+http://blog.csdn.net/cv_family_z/article/details/51907328                 SSD
+http://blog.csdn.net/wh__zz/article/details/51725221
+
+https://github.com/weiliu89/caffe/tree/ssd

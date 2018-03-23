@@ -1,0 +1,18 @@
+http://blog.csdn.net/u012361214/article/details/51507590
+
+http://blog.csdn.net/shadow_guo/article/details/51767036
+
+Faster-RCNN
+http://blog.csdn.net/anxiaoxi45/article/details/46522155/
+http://blog.csdn.net/XZZPPP/article/details/51582810
+
+
+fast rcnn讲解
+http://blog.csdn.net/shenxiaolu1984/article/details/51036677
+fast rcnn代码
+https://github.com/rbgirshick/fast-rcnn
+
+本文采用的特征提取方法
+http://blog.csdn.net/yihaizhiyan/article/details/26962607
+中文论文
+http://blog.csdn.net/u011534057/article/details/51318670
