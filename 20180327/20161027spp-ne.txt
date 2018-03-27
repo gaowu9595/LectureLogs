@@ -1,0 +1,32 @@
+1.ablation studies
+
+
+
+2.R-CNN的损失函数，是通过bb-regression来定义的
+
+
+
+3.spp-net（based on Alexnet）：
+将CNN的最后一个pooling层换成spp layer,实际上就是一个pooling变成了多尺度的pooling，在pooling操作中所需要的1*1,2*2...不是pooling的窗口大小，而是指每次pooling根据特征图的大小计算窗口的步长和大小进行pooling（这样计算出来的步长和大小称为bins），这样做，无论进入pooling layer的conv5 features 维度多大，都可以将其pooling到同一维度，送到fc6
+（Generic Object Detection With Dense Neural Patterns and Regionlets）提出的Regionlets用直方图的方式将最后卷积层出来的特征统一维度，这样做将CNN中具有spatial的特征全部抹掉了。
+
+作者用的图像大小最小是480的，猜测可能用过小尺寸，但是效果不好。想想也知道，如果用特别小的原始图像，经过一系列conv和pooling后，有些小的region可能会被干掉了（有专门针对小目标提出的目标检测方法，忘了是哪个论文）
+
+
+由定义可知，全连接层的输入要求是固定尺寸的
+
+spatial bins的尺寸是由图像尺寸决定的，而bins的数量是固定不变，是预先设定的值。在每个spatial bin里面，pool每个卷积核的响应。（在这个论文中采用的是max pooling）,spp layer层的输出是一个个的kM维的向量（k表示最后一个卷积层中卷积核的个数，M表示bins的个数）。然后将这个固定长度的特征向量（特征图）input to the fully-connected layers
+网络可以从不同尺寸、不同规模的图像中提取不同尺度的特征。实际上，可以这样理解:最粗糙的pyramid pooling layer只有一个bin处理整副图片,这其实就是一个“global pooling”操作。这个规模可以降低模型规模同时防止过拟合。
+
+在训练网络的时候，由于caffe等框架都要求输入图像是固定尺度的，所以在训练的时候还需要一些技巧，见paper。
+
+在两个全连接层中加入了dropout技术。用R-CNN中的方法对pre-trained模型进行微调。最后用了bb regression
+
+传统的CNN得到region proposals需保存，然后一个一个送到convolutional layers。很耗时间和存储空间。
+
+spp-net在整副图像上只做一次卷积（不管窗口的大小），将卷积得到的特征图用spp-net提取特征。由此给R-CNN加速
+
+SVM/softmax classifiers或者全连接层要求输入必须是固定长度的。
+
+目前新的目标检测方法中，通过选择性搜索产生object proposals的方法已经被抛弃了。
+R-CNN用了20种SVM分类器。。。为什么不考虑直接用一种多分类的SVM？
